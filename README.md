@@ -8,6 +8,7 @@ A python script that finds total number of citations and counts for each citatio
 ```
 python3 cite_count.py your-tex-file.tex
 ```
+Note this has only been tested with natbib (e.g. \citep, \citet, \citealt commands).
 
 ## Output
 Output is directly printed into the console output listing the total number of citations along with the individual counts for each unique reference. The keywords listed are those that are passed into the \cite command within your Latex document.
