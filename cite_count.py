@@ -9,8 +9,9 @@ if len(sys.argv) != 2:
 
 filename = str(sys.argv[1])
 
-commentRE = re.compile('%.*')
-citeRE = re.compile('\\\\cite.?\{([^\}]*)\}')
+nlcommentRE = re.compile('%.*')
+commentRE = re.compile('[^\\\\](%.*)')
+citeRE = re.compile('\\\\cite.*?\{([^\}]*)\}')
 
 with open(filename, 'r') as file:
     data = file.readlines()
@@ -18,9 +19,12 @@ with open(filename, 'r') as file:
 allCites = []
 
 for line in data:
-    comments = commentRE.match(line)
+    nlcomments = nlcommentRE.match(line)
+    comments = commentRE.search(line)
+    if (nlcomments is not None):
+        continue
     if (comments is not None):
-        text = line[:comments.start()]
+        text = line[:comments.start(1)]
         if (len(text) == 0):
             continue
     else:
